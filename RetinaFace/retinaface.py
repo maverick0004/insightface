@@ -112,8 +112,10 @@ class RetinaFace:
     #self._landmark_pred = landmark_pred
     sym, arg_params, aux_params = mx.model.load_checkpoint(prefix, epoch)
     if self.ctx_id>=0:
-      self.ctx = mx.gpu(self.ctx_id)
-      self.nms = gpu_nms_wrapper(self.nms_threshold, self.ctx_id)
+      # self.ctx = mx.gpu(self.ctx_id)
+      # self.nms = gpu_nms_wrapper(self.nms_threshold, self.ctx_id)
+      self.ctx = mx.cpu()
+      self.nms = cpu_nms_wrapper(self.nms_threshold)
     else:
       self.ctx = mx.cpu()
       self.nms = cpu_nms_wrapper(self.nms_threshold)
